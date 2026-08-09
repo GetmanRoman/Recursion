@@ -1,100 +1,85 @@
 ﻿void first_sumOfDigitsOfNumber()
 {
-    Console.Write("Введите число, сумму чьих цифр вы хотите видеть: ");
-    int variableOfSum = Convert.ToInt32(Console.ReadLine());
+    int variableOfSum;      // Изначальное число, сумму чьих цифр ищем
+    int lenghtOfNumber;     // Длина числа
+    int[] massive;          // Массив для записи цифр
+    int j = 0;              // Для записи чисел в массив 
+    int checkOfMassive = 0; // Для перехода, от записи цифр в массив до сложения их (и всё в рекурсии)
+    int result = 0;         // Итог
 
-    int lenghtOfNumber = Convert.ToString(variableOfSum).Length;
-    int[] massive = new int[lenghtOfNumber];
-    
-    int i = 0;
-    foreach (char a in Convert.ToString(variableOfSum))
-    {
-        massive[i] =  Convert.ToInt32(a - '0'); //Надо, т.к. это char, который переведёт значение из ASC||, увеличив его на 48
-        //Console.WriteLine($"Номер элемента i = {i}, число {massive[i]}");
-        i++;
-    }
-    
-    int result = 0;
-    int realResult = Mathematic(lenghtOfNumber, result, massive);
-    
+    Console.Write("Введите число, сумму чьих цифр вы хотите видеть: ");
+    variableOfSum = Convert.ToInt32(Console.ReadLine()); 
+
+    lenghtOfNumber = Convert.ToString(variableOfSum).Length;
+    massive = new int[lenghtOfNumber];
+
+    Console.WriteLine($"Итог: {Mathematic(variableOfSum, lenghtOfNumber, result, checkOfMassive, j, massive)}");
+    Console.WriteLine();
+
     // Вычисления рекурсией
-    int Mathematic(int lenght, int result, int[] massiv)
+    int Mathematic(int variableOfSum, int lenght, int result, int checkOfMassive, int j, int[] massive)
     {
-        if (lenght > 0)
+        // Запись цифр в массив
+        if (checkOfMassive == 0)
         {
-            result += massive[lenght - 1];
-            lenght -= 1;
-            return Mathematic(lenght, result, massive); // Обязательный return функции
-            /* Пишу для себя, как напоминание
-             * Если ввести 1234, то функция 4 раза вызовет себя, которые будут наслаиваться друг на друга, 
-             * и когда в последнем вызове не выполнится условие if, то на этом программа не закончится -
-             * она ещё 3 раза выполнит return, то есть если было в вызове в result 9, то вернёт 9
-             * Таким образом вернулись в самое начало и получили 4, а возвращая
-             * саму функцию, то не допускаем это
-             */
+            if (lenght > 0)
+            {
+                massive[j] = Convert.ToString(variableOfSum)[j] - '0';
+                j++;
+                lenght--;
+                return Mathematic(variableOfSum, lenght, result, checkOfMassive, j, massive);
+            }
+            else
+            {
+                checkOfMassive = 1;
+                lenght = Convert.ToString(variableOfSum).Length;
+            }
+        }
+        // Сложение цифр из массива
+        if (checkOfMassive == 1)
+        {
+            if (lenght > 0)
+            {
+                result += massive[lenght - 1];
+                lenght--;
+                return Mathematic(variableOfSum, lenght, result, checkOfMassive, j, massive);
+            }
         }
         return result;
     }
-    
-    Console.WriteLine($"Итог: {realResult}");
-    Console.WriteLine();
 }
 
-void second_mirrorNumber()
+void second_mirrorNumber() //------------------------------------------------------------------------------------------  Ещё доделываю
 {
-    Console.Write("Введите слово, которое хотите проверить, на возможность одинаково прочесть справа налево: ");
-    string word = Console.ReadLine();
-    int lenghtOfWord = word.Length;
-    
-    string mirrorWord;
-    string[] massiveOfWord = new string[lenghtOfWord];
+    string word;      // Изначальное число, сумму чьих цифр ищем
+    int lenghtOfWord;     // Длина числа
+    string[] massive;          // Массив для записи цифр
+    int j = 0;              // Для записи чисел в массив 
+    int checkOfMassive = 0; // Для перехода, от записи цифр в массив до сложения их (и всё в рекурсии)
+    bool result = true;         // Итог
 
-    int i = 0;
-    foreach (char a in word)
-    {
-        massiveOfWord[i] =  Convert.ToString(a);
-        i++;
-    }
-    
-    int j = 0;
-    string[] Mirrowing(int lenghtOfWord, int j, string[] massiveOfWord)
-    {
-        if (lenghtOfWord > j)
-        {
-            massiveOfWord[lenghtOfWord - 1] = massiveOfWord[j];
-            j++;
-            lenghtOfWord--;
-            /* Продолжи с этого
-             * Проверь, что массив правильно отзеркалился
-             */
-            // ------------------- Проверка 
-            int i = 0;
-            foreach (char a in word)
-            {
-                massiveOfWord[i] =  Convert.ToString(a);
-                i++;
-            }
-            // ------------------- Проверка
-            return Mirrowing(lenghtOfWord, j, massiveOfWord);
-        }
-        return massiveOfWord;
-    }
-    
-    string[] massiveOfMirrorWord = Mirrowing(lenghtOfWord, j, massiveOfWord);
+    Console.Write("Введите слово которое хотите проверить на возможность отзеркалить и также прочесть: ");
+    word = Console.ReadLine(); 
 
-    bool result;
-    if (massiveOfMirrorWord == massiveOfWord)
+    lenghtOfWord = Convert.ToString(word).Length;
+    massive = new string[lenghtOfWord];
+
+    Mirroring();
+    
+    if (result == true)
     {
-        result = false;
+        Console.WriteLine($"Слово {word } можно отзеркалить");
     }
     else
     {
-        result = true;
+        Console.WriteLine($"Слово {word } нельзя отзеркалить");
     }
     
+    void Mirroring()
+    {
+        
+    }
     
-    Console.WriteLine(result);
-    Console.WriteLine();
 }
 
 void third_generatingAllBinaryStrings()
@@ -109,7 +94,6 @@ void Main()
     Console.WriteLine("2 - Зеркальное число");
     Console.WriteLine("3 - Генерация всех двоичных строк");
     Console.WriteLine("4 - Выход");
-    Console.WriteLine();
     
     // Выбор задачи
     bool cycle = true;
@@ -165,6 +149,26 @@ void Main()
         return  intInput;
     }
     
+    // ------------------------ Пример без рекурсии
+    
+    // Console.Write($"Введите слово, которое хотите проверить на одинаковую читаемость в обратном порядке: ");
+    // string input = Console.ReadLine();
+    //
+    // int lenght = input.Length;
+    // string[] massive = new string[lenght];
+    //
+    // int i = 1;
+    // foreach (char c in input)
+    // {
+    //     massive[lenght - i] = Convert.ToString(c);
+    //     i++;
+    // }
+    //
+    // string result;
+    // if (input == string.Join("", massive)) result = "Равны";
+    // else result = "Не равны";
+    //
+    // Console.WriteLine($"Итог: {result}");
 }
 
 // Вызов функции
