@@ -128,9 +128,52 @@ void second_mirrorNumber()
     }
 }
 
-void third_generatingAllBinaryStrings() //------------------------------------------------------------------------------ Остановился на этом
+void third_generatingAllBinaryStrings() 
 {
-    
+    Console.Write("Введите размер числа, состоящего из 0 и 1, в котором будет перебор всех возможных вариаций: ");
+    int lenght = Convert.ToInt32(Console.ReadLine());
+    int checkOfMassive = 0;
+    int nowElement = 0;
+    int[] massive = new int[lenght];
+
+    Mathematic(lenght, checkOfMassive, nowElement, massive);
+
+    // Вычисления рекурсией
+    /* Логика (+ перед каждой рекурсией выводим итог)
+     * 0	Делаем 0000
+     * 1	Если на последнем элементе нет 1, то ставим
+     * 2	Если на последнем элементе есть 1, то смещаемся на элемент левее и там ставим 1
+     * 3	Если на нынешнем элементе есть 1, с права нет, то смещаемся вправо и там ставим 1
+     * 4	У всех найденных 1 подряд мы ставим 0, а ближайшего 0 слева от них 1
+     * 5	Возвращемся на второй шаг
+     */
+    void Mathematic(int lenght, int checkOfMassive, int nowElement, int[] massive)
+    {
+        if (checkOfMassive == 0)
+        {
+            //massive -------------------------------------------------------------------------------------------------  Остановился на этом
+        }
+        if (checkOfMassive == 1)
+        {
+            
+        }
+        if (checkOfMassive == 2)
+        {
+            
+        }
+        if (checkOfMassive == 3)
+        {
+            
+        }
+        if (checkOfMassive == 4)
+        {
+            
+        }
+        if (checkOfMassive == 5)
+        {
+            
+        }
+    }
 }
 
 void Main()
