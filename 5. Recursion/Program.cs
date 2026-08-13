@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-void first_sumOfDigitsOfNumber()
+﻿void first_sumOfDigitsOfNumber()
 {
     int variableOfSum;      // Изначальное число, сумму чьих цифр ищем
     int lenghtOfNumber;     // Длина числа
@@ -153,14 +151,15 @@ void third_generatingAllBinaryStrings()
     */
 
     // ----------------------------------------------------------------------------------------------------------------- Продолжи с этого
-    // Ошибка выхода за размер массива
-    // Проблема этой функции и принимающих значений
     // Просто сделай код лучше + с 1-2 входным параметром, как надо
+    
+    // Console.WriteLine("0 -----");
     
     void Mathematic() // Пробую сделать рекурсию с минимумом входных параметров
     {
         if (checkOfMassive == 0) // Делаем 0000
         {
+            //Console.WriteLine("0 -----");
             massive = new int[lenght];
             Console.WriteLine($"Номер {i}, {string.Join("", massive)}");
             ++i;
@@ -168,6 +167,7 @@ void third_generatingAllBinaryStrings()
         }
         if (checkOfMassive == 1) // Если на последнем элементе нет 1, то ставим
         {
+            //Console.WriteLine("1 -----");
             if (massive[lenght - 1] == 0)
             {
                 massive[lenght - 1] = 1;
@@ -179,6 +179,7 @@ void third_generatingAllBinaryStrings()
         }
         if (checkOfMassive == 2) // Если на соседнем нет 1, то ставим, а на последнем убираем
         {
+            //Console.WriteLine("2 -----");
             if (massive[lenght - 1] == 0)
             {
                 massive[lenght - 1] = 1;
@@ -191,6 +192,7 @@ void third_generatingAllBinaryStrings()
         }
         if (checkOfMassive == 3) // Если на нынешнем элементе есть 1, с права нет, то ставим справо
         {
+            //Console.WriteLine("3 -----");
             if (massive[lenght + 1] == 0)
             {
                 massive[lenght + 1] = 1;
@@ -201,20 +203,42 @@ void third_generatingAllBinaryStrings()
             checkOfMassive = 4;
             lenght = massive.Length;
         }
-        if (checkOfMassive == 4) // Если в ряд собралось более 2 единичек, то слева всех них ставим 1, а из самих убираем
+        if (checkOfMassive == 4) 
+            // Если в ряд собралось 2 единички и более, то слева всех них ставим 1, а из самих убираем
         {
-            
-            if (massive[lenght - 1] == 1)
+            //Console.WriteLine("4 ничего");
+            if (lenght > 0)
             {
-                --lenght;
-                Mathematic();
+                if (massive[lenght - 1] == 1)
+                {
+                    Console.WriteLine($"Блок 1.1, длина ДО изменения = {lenght}");
+                    --lenght;
+                    Console.WriteLine($"Блок 1.1, длина ПОСЛЕ изменения = {lenght}");
+                    Mathematic();
+                }
             }
-            massive[lenght - 1] = 1;
-            checkOfMassive = 5;
+            // else
+            // {
+            //     --lenght;
+            //     Console.WriteLine($"Блок 1.2, длина ПОСЛЕ изменения = {lenght}");
+            // }
+            
+            if (lenght == 0)
+            {
+                checkOfMassive = 6;
+            }
+            else
+            {
+                Console.WriteLine($"В 1.4, длина, идущая в массив = {lenght}");
+                massive[lenght - 1] = 1;
+                checkOfMassive = 5;
+            }
+            
             // Здесь не должно быть вывода, ведь мы не очистили другие единички
         }
         if (checkOfMassive == 5) // Очищаем все остальные единички и вовзращаемся к первому шагу
         {
+            Console.WriteLine("5 -----");
             if (lenght < massive.Length)
             {
                 ++lenght;
@@ -225,6 +249,13 @@ void third_generatingAllBinaryStrings()
             ++i;
             checkOfMassive = 1;
             Mathematic();
+        }
+        
+        // ------------------------------------------------------------------------------------------------------------- Всё, мы пришли к концу рекурсии, завершили, ОТКУДА ЕЩЁ ВЫЗОВ?
+        if (checkOfMassive == 6)
+        {
+            Console.WriteLine("6 -----");
+            return; 
         }
     }
 }
