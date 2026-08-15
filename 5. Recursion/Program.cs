@@ -132,131 +132,125 @@ void third_generatingAllBinaryStrings()
 {
     Console.WriteLine("Введите размер числа, состоящего из 0 и 1, в котором будет перебор всех возможных вариаций ");
     Console.Write("Больше 5 не вводить, иначе виснет: ");
-    int lenght = Convert.ToInt32(Console.ReadLine());
-    int checkOfMassive = 0;
-    int nowElement = 0;
+    int lenght = Convert.ToInt32(Console.ReadLine()); // Длина массива
+    int checkOfMassive = 0; // Какой блок массива сейчас выполняется
+    int nowElement = 0; 
     int[] massive = new int[lenght];
-    int i = 1;
-    bool checkUououtIn5 = false;
-    Mathematic();
-
-    // Вычисления рекурсией
-    /* Старая логика (+ перед каждой рекурсией выводим итог)
-    * 0 Делаем 0000 + переменные
-    * 1 Если на последнем элементе нет 1, то ставим
-    * 2 Если на соседнем нет 1, то ставим, а на последнем убираем
-    * 3 Если на нынешнем элементе есть 1, с права нет, то ставим справо
-    * 4 Если в ряд собралось более 2 единичек, то слева всех них ставим 1, а из самих убираем
-    * 5 Очищаем все остальные единички и вовзращаемся к первому шагу
-    */
-
-    // ----------------------------------------------------------------------------------------------------------------- Продолжи с этого
-    // Просто сделай код лучше + с 1-2 входным параметром, как надо
+    int i = 1; // Какой по счёту это возможный вариант перебора
+    bool shitOfFive = false; // Для того чтобы кроме ошибки выхода за рамки массива мне не делало ещё 1 лишний вызов
     
-    // Console.WriteLine("0 -----");
+    Mathematic();
     
     void Mathematic() // Пробую сделать рекурсию с минимумом входных параметров
     {
-        if (checkOfMassive == 0) // Делаем 0000
-        {
-            //Console.WriteLine("0 -----");
-            massive = new int[lenght];
-            Console.WriteLine($"Номер {i}, {string.Join("", massive)}");
-            ++i;
-            checkOfMassive = 1;
-        }
-        if (checkOfMassive == 1) // Если на последнем элементе нет 1, то ставим
-        {
-            //Console.WriteLine("1 -----");
-            if (massive[lenght - 1] == 0)
+        
+            if (checkOfMassive == 0) // Делаем 0000
             {
-                massive[lenght - 1] = 1;
+                // Console.WriteLine("0 -----");
+                massive = new int[lenght]; // При задании длины массива у него на автомате все значения становятся по нулям
                 Console.WriteLine($"Номер {i}, {string.Join("", massive)}");
-                --lenght;
                 ++i;
+                checkOfMassive = 1;
             }
-            checkOfMassive = 2;
-        }
-        if (checkOfMassive == 2) // Если на соседнем нет 1, то ставим, а на последнем убираем
-        {
-            //Console.WriteLine("2 -----");
-            if (massive[lenght - 1] == 0)
+
+            if (checkOfMassive == 1) // Если на последнем элементе нет 1, то ставим
             {
-                massive[lenght - 1] = 1;
-                massive[lenght] = 0;
-                Console.WriteLine($"Номер {i}, {string.Join("", massive)}");
-                --lenght;
-                ++i;
-            }
-            checkOfMassive = 3;
-        }
-        if (checkOfMassive == 3) // Если на нынешнем элементе есть 1, с права нет, то ставим справо
-        {
-            //Console.WriteLine("3 -----");
-            if (massive[lenght + 1] == 0)
-            {
-                massive[lenght + 1] = 1;
-                Console.WriteLine($"Номер {i}, {string.Join("", massive)}");
-                --lenght;
-                ++i;
-            }
-            checkOfMassive = 4;
-            lenght = massive.Length;
-        }
-        if (checkOfMassive == 4) 
-            // Если в ряд собралось 2 единички и более, то слева всех них ставим 1, а из самих убираем
-        {
-            //Console.WriteLine("4 ничего");
-            if (lenght > 0)
-            {
-                if (massive[lenght - 1] == 1)
+                // Console.WriteLine("1 -----");
+                if (massive[lenght - 1] == 0)
                 {
-                    Console.WriteLine($"Блок 1.1, длина ДО изменения = {lenght}");
+                    massive[lenght - 1] = 1;
+                    Console.WriteLine($"Номер {i}, {string.Join("", massive)}");
                     --lenght;
-                    Console.WriteLine($"Блок 1.1, длина ПОСЛЕ изменения = {lenght}");
+                    ++i;
+                }
+
+                checkOfMassive = 2;
+            }
+
+            if (checkOfMassive == 2) // Если на соседнем нет 1, то ставим, а на последнем убираем
+            {
+                // Console.WriteLine("2 -----");
+                if (massive[lenght - 1] == 0)
+                {
+                    massive[lenght - 1] = 1;
+                    massive[lenght] = 0;
+                    Console.WriteLine($"Номер {i}, {string.Join("", massive)}");
+                    --lenght;
+                    ++i;
+                }
+
+                checkOfMassive = 3;
+            }
+
+            if (checkOfMassive == 3) // Если на нынешнем элементе есть 1, с права нет, то ставим справо
+            {
+                // Console.WriteLine("3 -----");
+                if (massive[lenght + 1] == 0)
+                {
+                    massive[lenght + 1] = 1;
+                    Console.WriteLine($"Номер {i}, {string.Join("", massive)}");
+                    --lenght;
+                    ++i;
+                }
+
+                checkOfMassive = 4;
+                lenght = massive.Length;
+                // Базовый случай - это пройти 00, 01, 10, 11, чтобы потом убрать за раз максимум 1
+            }
+            
+            // Если в ряд собралось 2 единички и более, то слева всех них ставим 1, а из самих убираем
+            if (checkOfMassive == 4) // Здесь только узнаём, сколько подряд
+            {
+                // Console.WriteLine("4 ничего");
+                if (lenght > 0)
+                {
+                    if (massive[lenght - 1] == 1)
+                    {
+                        // Console.WriteLine($"Блок 1.1, длина ДО изменения = {lenght}");
+                        --lenght;
+                        // Console.WriteLine($"Блок 1.1, длина ПОСЛЕ изменения = {lenght}");
+                        Mathematic();
+                    }
+                } 
+                // ----------------------------------------------------------------------------------------------------- Чтобы было истино, нужно пойти в 6, а чтобы пойти в 6, нужно чтоб было истино
+                // + всё её ошибка с выходом за размеры массива, но уже без доп вызопа
+                if (shitOfFive == false)
+                {
+                    // Console.WriteLine($"В 1.4, длина, идущая в массив = {lenght}");
+                    
+                    massive[lenght - 1] = 1;
+                    checkOfMassive = 5;
+                }
+                else
+                {
+                    checkOfMassive = 6;
+                }
+
+                // Здесь не должно быть вывода, ведь мы не очистили другие единички
+            }
+
+            if (checkOfMassive == 5) // Очищаем все найденные подряд единички и вовзращаемся к первому шагу
+            {
+                // Console.WriteLine("5 -----");
+                if (lenght < massive.Length)
+                {
+                    ++lenght;
+                    massive[lenght - 1] = 0;
                     Mathematic();
                 }
-            }
-            // else
-            // {
-            //     --lenght;
-            //     Console.WriteLine($"Блок 1.2, длина ПОСЛЕ изменения = {lenght}");
-            // }
-            
-            if (lenght == 0)
-            {
-                checkOfMassive = 6;
-            }
-            else
-            {
-                Console.WriteLine($"В 1.4, длина, идущая в массив = {lenght}");
-                massive[lenght - 1] = 1;
-                checkOfMassive = 5;
-            }
-            
-            // Здесь не должно быть вывода, ведь мы не очистили другие единички
-        }
-        if (checkOfMassive == 5) // Очищаем все остальные единички и вовзращаемся к первому шагу
-        {
-            Console.WriteLine("5 -----");
-            if (lenght < massive.Length)
-            {
-                ++lenght;
-                massive[lenght - 1] = 0;
+
+                Console.WriteLine($"Номер {i}, {string.Join("", massive)}");
+                ++i;
+                checkOfMassive = 1;
                 Mathematic();
             }
-            Console.WriteLine($"Номер {i}, {string.Join("", massive)}");
-            ++i;
-            checkOfMassive = 1;
-            Mathematic();
-        }
-        
-        // ------------------------------------------------------------------------------------------------------------- Всё, мы пришли к концу рекурсии, завершили, ОТКУДА ЕЩЁ ВЫЗОВ?
-        if (checkOfMassive == 6)
-        {
-            Console.WriteLine("6 -----");
-            return; 
-        }
+
+            if (checkOfMassive == 6)
+            {
+                // Console.WriteLine("6 -----");
+                shitOfFive = true;
+                return;
+            }
     }
 }
 
