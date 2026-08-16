@@ -134,10 +134,10 @@ void third_generatingAllBinaryStrings()
     Console.Write("Больше 5 не вводить, иначе виснет: ");
     int lenght = Convert.ToInt32(Console.ReadLine()); // Длина массива
     int checkOfMassive = 0; // Какой блок массива сейчас выполняется
-    int nowElement = 0; 
+
     int[] massive = new int[lenght];
     int i = 1; // Какой по счёту это возможный вариант перебора
-    bool shitOfFive = false; // Для того чтобы кроме ошибки выхода за рамки массива мне не делало ещё 1 лишний вызов
+    
     
     Mathematic();
     
@@ -146,20 +146,20 @@ void third_generatingAllBinaryStrings()
         
             if (checkOfMassive == 0) // Делаем 0000
             {
-                // Console.WriteLine("0 -----");
+                Console.WriteLine("0 -----");
                 massive = new int[lenght]; // При задании длины массива у него на автомате все значения становятся по нулям
-                Console.WriteLine($"Номер {i}, {string.Join("", massive)}");
+                Console.WriteLine($"Номер {i}, {string.Join("", massive)}, 0");
                 ++i;
                 checkOfMassive = 1;
             }
 
             if (checkOfMassive == 1) // Если на последнем элементе нет 1, то ставим
             {
-                // Console.WriteLine("1 -----");
+                Console.WriteLine("1 -----");
                 if (massive[lenght - 1] == 0)
                 {
                     massive[lenght - 1] = 1;
-                    Console.WriteLine($"Номер {i}, {string.Join("", massive)}");
+                    Console.WriteLine($"Номер {i}, {string.Join("", massive)}, 1");
                     --lenght;
                     ++i;
                 }
@@ -167,15 +167,14 @@ void third_generatingAllBinaryStrings()
                 checkOfMassive = 2;
             }
 
-            if (checkOfMassive == 2) // Если на соседнем нет 1, то ставим, а на последнем убираем
+            if (checkOfMassive == 2) // Если левее нет 1, то ставим, а на правее убираем
             {
-                // Console.WriteLine("2 -----");
+                Console.WriteLine("2 -----");
                 if (massive[lenght - 1] == 0)
                 {
                     massive[lenght - 1] = 1;
                     massive[lenght] = 0;
-                    Console.WriteLine($"Номер {i}, {string.Join("", massive)}");
-                    --lenght;
+                    Console.WriteLine($"Номер {i}, {string.Join("", massive)}, 2");
                     ++i;
                 }
 
@@ -184,24 +183,24 @@ void third_generatingAllBinaryStrings()
 
             if (checkOfMassive == 3) // Если на нынешнем элементе есть 1, с права нет, то ставим справо
             {
-                // Console.WriteLine("3 -----");
-                if (massive[lenght + 1] == 0)
+                Console.WriteLine("3 -----");
+                if (massive[lenght] == 0)
                 {
-                    massive[lenght + 1] = 1;
-                    Console.WriteLine($"Номер {i}, {string.Join("", massive)}");
+                    massive[lenght] = 1;
+                    Console.WriteLine($"Номер {i}, {string.Join("", massive)}, 3");
                     --lenght;
                     ++i;
                 }
 
                 checkOfMassive = 4;
-                lenght = massive.Length;
+                lenght = massive.Length; // Сбросили длину, чтобы пройтись по всем единичкам в 4 части
                 // Базовый случай - это пройти 00, 01, 10, 11, чтобы потом убрать за раз максимум 1
             }
             
             // Если в ряд собралось 2 единички и более, то слева всех них ставим 1, а из самих убираем
             if (checkOfMassive == 4) // Здесь только узнаём, сколько подряд
             {
-                // Console.WriteLine("4 ничего");
+                Console.WriteLine("4 ничего");
                 if (lenght > 0)
                 {
                     if (massive[lenght - 1] == 1)
@@ -211,35 +210,32 @@ void third_generatingAllBinaryStrings()
                         // Console.WriteLine($"Блок 1.1, длина ПОСЛЕ изменения = {lenght}");
                         Mathematic();
                     }
-                } 
-                // ----------------------------------------------------------------------------------------------------- Чтобы было истино, нужно пойти в 6, а чтобы пойти в 6, нужно чтоб было истино
-                // + всё её ошибка с выходом за размеры массива, но уже без доп вызопа
-                if (shitOfFive == false)
-                {
-                    // Console.WriteLine($"В 1.4, длина, идущая в массив = {lenght}");
-                    
-                    massive[lenght - 1] = 1;
-                    checkOfMassive = 5;
+                    else
+                    {
+                        massive[lenght - 1] = 1;
+                        ++lenght;
+                        checkOfMassive = 5;
+                    }
                 }
                 else
                 {
                     checkOfMassive = 6;
                 }
-
-                // Здесь не должно быть вывода, ведь мы не очистили другие единички
             }
 
             if (checkOfMassive == 5) // Очищаем все найденные подряд единички и вовзращаемся к первому шагу
             {
-                // Console.WriteLine("5 -----");
-                if (lenght < massive.Length)
+                Console.WriteLine("5 -----");
+                if (lenght < massive.Length) // Здесь уменьшаем длину на 1, чтобы проверить самый правый элемент
                 {
-                    ++lenght;
+                    
                     massive[lenght - 1] = 0;
+                    ++lenght;
                     Mathematic();
                 }
-
-                Console.WriteLine($"Номер {i}, {string.Join("", massive)}");
+                massive[lenght - 1] = 0;
+                
+                Console.WriteLine($"Номер {i}, {string.Join("", massive)}, 5");
                 ++i;
                 checkOfMassive = 1;
                 Mathematic();
@@ -247,8 +243,7 @@ void third_generatingAllBinaryStrings()
 
             if (checkOfMassive == 6)
             {
-                // Console.WriteLine("6 -----");
-                shitOfFive = true;
+                Console.WriteLine("6 -----");
                 return;
             }
     }
