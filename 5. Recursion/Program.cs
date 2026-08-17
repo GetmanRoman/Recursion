@@ -136,7 +136,6 @@ void third_generatingAllBinaryStrings()
     int checkOfMassive = 0; // Какой блок массива сейчас выполняется
 
     int[] massive = new int[lenght];
-    int i = 1; // Какой по счёту это возможный вариант перебора
     
     
     Mathematic();
@@ -144,24 +143,20 @@ void third_generatingAllBinaryStrings()
     void Mathematic() // Пробую сделать рекурсию с минимумом входных параметров
     {
         
-            if (checkOfMassive == 0) // Делаем 0000
+            if (checkOfMassive == 0) // Делаем 000
             {
-                Console.WriteLine("0 -----");
-                massive = new int[lenght]; // При задании длины массива у него на автомате все значения становятся по нулям
-                Console.WriteLine($"Номер {i}, {string.Join("", massive)}, 0");
-                ++i;
+                massive = new int[lenght]; // Создали пустой массив (при задании длины массива у него на автомате все значения становятся по нулям)
+                Console.WriteLine($"{string.Join("", massive)}");
                 checkOfMassive = 1;
             }
 
-            if (checkOfMassive == 1) // Если на последнем элементе нет 1, то ставим
+            if (checkOfMassive == 1) // Если на самом правом элементе нет 1, то ставим
             {
-                Console.WriteLine("1 -----");
                 if (massive[lenght - 1] == 0)
                 {
                     massive[lenght - 1] = 1;
-                    Console.WriteLine($"Номер {i}, {string.Join("", massive)}, 1");
+                    Console.WriteLine($"{string.Join("", massive)}");
                     --lenght;
-                    ++i;
                 }
 
                 checkOfMassive = 2;
@@ -169,13 +164,11 @@ void third_generatingAllBinaryStrings()
 
             if (checkOfMassive == 2) // Если левее нет 1, то ставим, а на правее убираем
             {
-                Console.WriteLine("2 -----");
                 if (massive[lenght - 1] == 0)
                 {
                     massive[lenght - 1] = 1;
                     massive[lenght] = 0;
-                    Console.WriteLine($"Номер {i}, {string.Join("", massive)}, 2");
-                    ++i;
+                    Console.WriteLine($"{string.Join("", massive)}");
                 }
 
                 checkOfMassive = 3;
@@ -183,13 +176,11 @@ void third_generatingAllBinaryStrings()
 
             if (checkOfMassive == 3) // Если на нынешнем элементе есть 1, с права нет, то ставим справо
             {
-                Console.WriteLine("3 -----");
                 if (massive[lenght] == 0)
                 {
                     massive[lenght] = 1;
-                    Console.WriteLine($"Номер {i}, {string.Join("", massive)}, 3");
+                    Console.WriteLine($"{string.Join("", massive)}");
                     --lenght;
-                    ++i;
                 }
 
                 checkOfMassive = 4;
@@ -200,14 +191,11 @@ void third_generatingAllBinaryStrings()
             // Если в ряд собралось 2 единички и более, то слева всех них ставим 1, а из самих убираем
             if (checkOfMassive == 4) // Здесь только узнаём, сколько подряд
             {
-                Console.WriteLine("4 ничего");
                 if (lenght > 0)
                 {
                     if (massive[lenght - 1] == 1)
                     {
-                        // Console.WriteLine($"Блок 1.1, длина ДО изменения = {lenght}");
                         --lenght;
-                        // Console.WriteLine($"Блок 1.1, длина ПОСЛЕ изменения = {lenght}");
                         Mathematic();
                     }
                     else
@@ -225,28 +213,36 @@ void third_generatingAllBinaryStrings()
 
             if (checkOfMassive == 5) // Очищаем все найденные подряд единички и вовзращаемся к первому шагу
             {
-                Console.WriteLine("5 -----");
                 if (lenght < massive.Length) // Здесь уменьшаем длину на 1, чтобы проверить самый правый элемент
                 {
-                    
                     massive[lenght - 1] = 0;
                     ++lenght;
                     Mathematic();
                 }
-                massive[lenght - 1] = 0;
                 
-                Console.WriteLine($"Номер {i}, {string.Join("", massive)}, 5");
-                ++i;
+                // После 2 дней решения только этой проблемы я понял, что на сегодняшнем уровне за раз просто не смогу удержать в памяти всю работу рекурсии
+                // Поэтому просто поочерёдно везде добавлял исключение ошибки, а после её решения перебором нашёл ненужные и удалил
+                // Да, так не делается, но по другому я бы это не решил, мало практики
+                if (lenght > 0)
+                {
+                    massive[lenght - 1] = 0;
+                }
+                else
+                {
+                    return;
+                }
+                
+                Console.WriteLine($"{string.Join("", massive)}");
                 checkOfMassive = 1;
                 Mathematic();
             }
 
             if (checkOfMassive == 6)
             {
-                Console.WriteLine("6 -----");
                 return;
             }
     }
+    Console.WriteLine();
 }
 
 void Main()
