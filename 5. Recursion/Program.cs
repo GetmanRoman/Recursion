@@ -8,7 +8,7 @@
     int result = 0;         // Итог
 
     Console.Write("Введите число, сумму чьих цифр вы хотите видеть: ");
-    variableOfSum = Convert.ToInt32(Console.ReadLine()); 
+    variableOfSum = Convert.ToInt32(Console.ReadLine());
 
     lenghtOfNumber = Convert.ToString(variableOfSum).Length;
     massive = new int[lenghtOfNumber];
@@ -51,9 +51,9 @@
 
 void second_mirrorNumber() 
 {
-    string word;      // Изначальное число, сумму чьих цифр ищем
-    int lenghtOfWord;     // Длина числа
-    string[] massive;          // Массив для записи цифр
+    string word;      // Изначальное слово, которое пытаемся отзеркалить
+    int lenghtOfWord;     // Длина слова
+    string[] massive;          // Массив для записи букв
     string[] mirrorMassive;     // Отзеркаленный массив
     int j = 0;              // Для записи чисел в массив 
     int checkOfMassive = 0; // Для перехода, от записи цифр в массив до сложения их (и всё в рекурсии)
@@ -97,9 +97,7 @@ void second_mirrorNumber()
                     // Потому что в условии выше 1 - 1 = 0, и получается,
                     // что у нас в этой строчке последним числом будет 1, а не 0
                 {
-                    check = true;
                     checkOfMassive = 2;
-                    
                 }
                 --lenght;
                 return Mirroring(word, lenght, check, checkOfMassive, j, massive, mirrorMassive);
@@ -158,8 +156,13 @@ void third_generatingAllBinaryStrings()
                     Console.WriteLine($"{string.Join("", massive)}");
                     --lenght;
                 }
-
+                
                 checkOfMassive = 2;
+
+                if (lenght == 0)
+                {
+                    checkOfMassive = 6;
+                }
             }
 
             if (checkOfMassive == 2) // Если левее нет 1, то ставим, а на правее убираем
